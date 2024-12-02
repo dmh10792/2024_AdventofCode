@@ -1,21 +1,22 @@
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Scanner;
 
-import static java.lang.Math.abs;
-
-public class Part1 {
+public class Part2 {
 
     public static void main(String[] args) {
-
         List<Integer> leftList = new ArrayList<>();
         List<Integer> rightList = new ArrayList<>();
 
-        int total = 0;//initialize numbers to return
+        int score = 0;
 
         /*
          * Read in the lists
          */
         try {
+            //File inputFile = new File("src/TestData.txt");
             File inputFile = new File("src/input.txt");
             Scanner myReader = new Scanner(inputFile);
 
@@ -39,22 +40,22 @@ public class Part1 {
         Collections.sort(leftList);
         Collections.sort(rightList);
 
-        /*
-            compare the lists for the difference between each value and add them to a total
-         */
         for (int i = 0; i < leftList.size(); i++) {
-            int num1 = leftList.get(i);
-            int num2 = rightList.get(i);
+            int num = leftList.get(i);
 
-            int diff = Math.abs(num1 - num2);
+            int appearances = 0;
 
-            total += diff;
+            for(int value: rightList){
+                if(num == value){
+                    appearances++;
+                }
+            }
+
+            int similarity = num * appearances;
+
+            score += similarity;
         }
 
-        //return/print the total
-        System.out.println(total);
+        System.out.println(score);
     }
-
 }
-
-
