@@ -8,9 +8,15 @@ let result = 0;
 
 //Where things actually happen
 try {
-    let input = fs.readFileSync('TestInput.txt', 'utf8').split(/\n\n/);
+    let input = fs.readFileSync('../P1/TestInput.txt', 'utf8')
+        .replace(/\r\n/g, '\n') // Normalize Windows line endings
+        .replace(/\r/g, '\n')
+        .split(/\n\n/); 
+
     rules = input[0].split(/\n/);
+    
     pages = input[1].split(/\n/);
+    
 } catch (error) {
     console.log(error)
 }
@@ -29,21 +35,29 @@ const checkPages = () => {
                 let secondPageIndex = pageList.indexOf(rule[1]);
 
                 if(firstPageIndex > secondPageIndex) {//if its not safe
-                    
+                    //swap the two numbers
+                    let num1 = pageList[firstPageIndex];
+                    let num2 = pageList[secondPageIndex];
+                    let temp = num1;
+                    pageList[firstPageIndex] = num2;
+                    pageList[secondPageIndex] = num1;
+                    safe = false;
                 }
             }
                 
 
         }
 
-        // //if the list is safe
-        // if(!safe) {
-        //     let numList = pageList.split(/,/);
-        //     //find the middle element
-        //     let len = numList.length;
-        //     //console.log(Math.floor(len/2));
-        //     result += Number(numList[Math.floor(len/2)])
-        // }
+        //if the list is safe
+        if(!safe) {
+            console.log(pageList);
+            
+            // let numList = pageList.split(/,/);
+            // //find the middle element
+            // let len = numList.length;
+            // //console.log(Math.floor(len/2));
+            // result += Number(numList[Math.floor(len/2)])
+        }
 
     });
 
@@ -52,5 +66,4 @@ const checkPages = () => {
 }
 
 checkPages();
-//console.log(pages[0]);
 
